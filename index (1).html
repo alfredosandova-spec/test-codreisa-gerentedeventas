@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Psicométrico — Gerente de Ventas | Codreisa</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:       #1A3A5C;
+  --navy-deep:  #0F2338;
+  --blue:       #2E75B6;
+  --blue-light: #D6E4F0;
+  --orange:     #C55A11;
+  --orange-l:   #FDF0E8;
+  --gold:       #B8860B;
+  --white:      #FAFAF8;
+  --ink:        #1C1C1C;
+  --ink-mid:    #4A4A4A;
+  --ink-soft:   #7A7A7A;
+  --border:     #D8D8D4;
+  --success:    #1E6B3C;
+  --radius:     12px;
+  --radius-lg:  20px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #F4F1EC;
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── HEADER ── */
+.site-header {
+  background: var(--navy-deep);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 3px solid var(--orange);
+}
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  flex-direction: column;
+}
+.brand-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem;
+  color: var(--white);
+  letter-spacing: 0.08em;
+}
+.brand-sub {
+  font-size: 0.72rem;
+  color: #8BA8C4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.timer-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+.timer-label { font-size: 0.72rem; color: #8BA8C4; text-transform: uppercase; letter-spacing: 0.1em; }
+.timer-value { font-size: 1.3rem; font-weight: 700; color: var(--white); font-variant-numeric: tabular-nums; }
+.timer-value.warn { color: #FF8C42; }
+.timer-value.danger { color: #E05252; animation: pulse 1s ease infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+
+/* ── PROGRESS BAR ── */
+.progress-wrap {
+  background: var(--navy);
+  padding: 10px 32px;
+  max-width: 100%;
+}
+.progress-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 16px; }
+.progress-track {
+  flex: 1;
+  height: 6px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--orange));
+  border-radius: 99px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+.progress-pct { font-size: 0.78rem; color: #8BA8C4; font-weight: 600; white-space: nowrap; }
+
+/* ── HERO SECTION ── */
+.hero {
+  background: var(--navy-deep);
+  color: var(--white);
+  padding: 64px 32px 56px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  right: -60px;
+  top: -60px;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(197,90,17,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+.hero-tag {
+  display: inline-block;
+  background: var(--orange);
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.15;
+  margin-bottom: 16px;
+  color: var(--white);
+}
+.hero h1 span { color: var(--orange); font-style: italic; }
+.hero-sub {
+  font-size: 1.05rem;
+  color: #8BA8C4;
+  max-width: 580px;
+  line-height: 1.65;
+  margin-bottom: 36px;
+}
+.hero-meta {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.meta-item { display: flex; flex-direction: column; gap: 2px; }
+.meta-val { font-size: 1.4rem; font-weight: 700; color: var(--white); }
+.meta-key { font-size: 0.72rem; color: #8BA8C4; text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* ── CANDIDATO FORM ── */
+.candidato-section {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+.candidato-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 36px 32px;
+}
+.candidato-inner h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem;
+  color: var(--navy);
+  margin-bottom: 24px;
+}
+.candidato-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.field-group { display: flex; flex-direction: column; gap: 6px; }
+.field-group.full { grid-column: 1 / -1; }
+.field-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-mid);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.field-group input, .field-group select {
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--white);
+  transition: border-color 0.2s;
+  outline: none;
+}
+.field-group input:focus, .field-group select:focus { border-color: var(--blue); }
+
+/* ── INSTRUCCIONES ── */
+.instrucciones {
+  max-width: 900px;
+  margin: 32px auto;
+  padding: 0 32px;
+}
+.instr-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--blue);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+}
+.instr-card h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem;
+  color: var(--navy);
+  margin-bottom: 16px;
+}
+.instr-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.instr-list li { display: flex; gap: 12px; font-size: 0.9rem; color: var(--ink-mid); line-height: 1.55; }
+.instr-list li::before {
+  content: attr(data-n);
+  min-width: 24px;
+  height: 24px;
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 50%;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── MAIN CONTENT ── */
+.content { max-width: 900px; margin: 0 auto; padding: 0 32px 80px; }
+
+/* ── SECTION HEADER ── */
+.sec-header {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: 48px 0 28px;
+  box-shadow: 0 4px 24px rgba(26,58,92,0.12);
+}
+.sec-letter {
+  background: var(--orange);
+  color: var(--white);
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.8rem;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.sec-info {
+  background: var(--navy);
+  padding: 20px 28px;
+  flex: 1;
+}
+.sec-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.25rem;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.sec-desc { font-size: 0.82rem; color: #8BA8C4; line-height: 1.5; }
+.sec-pts {
+  background: rgba(197,90,17,0.2);
+  border: 1px solid rgba(197,90,17,0.4);
+  color: #FF9F5A;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 99px;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+/* ── QUESTION CARD ── */
+.q-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 30px;
+  margin-bottom: 20px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.q-card:hover { border-color: #B8C8D8; box-shadow: 0 2px 16px rgba(26,58,92,0.07); }
+.q-card.answered { border-left: 4px solid var(--success); }
+.q-num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 10px;
+}
+.q-text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+.q-case-box {
+  background: var(--orange-l);
+  border: 1px solid #E8C4A8;
+  border-left: 4px solid var(--orange);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+.q-case-box .case-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+/* ── OPCIONES MÚLTIPLES ── */
+.options { display: flex; flex-direction: column; gap: 10px; }
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: var(--white);
+}
+.option:hover { border-color: var(--blue); background: #F0F6FB; }
+.option.selected {
+  border-color: var(--navy);
+  background: #E8F0F8;
+}
+.option input[type="radio"] { display: none; }
+.option-letter {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--ink-mid);
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.option.selected .option-letter { background: var(--navy); color: var(--white); }
+.option-text { font-size: 0.92rem; color: var(--ink-mid); line-height: 1.5; padding-top: 4px; }
+.option.selected .option-text { color: var(--ink); }
+
+/* ── LIKERT ── */
+.likert-wrap { margin-top: 4px; }
+.likert-labels {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.likert-label {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  text-align: center;
+  line-height: 1.3;
+}
+.likert-options {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+.likert-btn {
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 4px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--white);
+  transition: all 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.likert-btn .dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  transition: all 0.15s;
+}
+.likert-btn:hover { border-color: var(--blue); }
+.likert-btn.sel { border-color: var(--navy); background: #E8F0F8; color: var(--navy); }
+.likert-btn.sel .dot { background: var(--navy); border-color: var(--navy); }
+.likert-num { font-size: 0.68rem; color: var(--ink-soft); }
+
+/* ── TEXTAREA ── */
+.q-textarea {
+  width: 100%;
+  min-height: 120px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  color: var(--ink);
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  background: var(--white);
+  transition: border-color 0.2s;
+}
+.q-textarea:focus { border-color: var(--blue); }
+.char-count {
+  text-align: right;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+.char-count.warn { color: var(--orange); }
+
+/* ── ANSWERED BADGE ── */
+.answered-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--success);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.answered-badge svg { width: 12px; height: 12px; }
+.q-card.answered .answered-badge { display: flex; }
+
+/* ── SUBMIT AREA ── */
+.submit-area {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px 60px;
+}
+.submit-card {
+  background: var(--navy-deep);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  text-align: center;
+  color: var(--white);
+}
+.submit-card h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+.submit-card p { color: #8BA8C4; font-size: 0.92rem; margin-bottom: 28px; line-height: 1.6; }
+.progress-summary {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.psumm { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.psumm-val { font-size: 2rem; font-weight: 700; color: var(--white); }
+.psumm-key { font-size: 0.72rem; color: #8BA8C4; text-transform: uppercase; letter-spacing: 0.1em; }
+.btn-submit {
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  padding: 16px 48px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  letter-spacing: 0.04em;
+}
+.btn-submit:hover { background: #A84A09; transform: translateY(-1px); }
+.btn-submit:active { transform: translateY(0); }
+.btn-submit:disabled { background: #888; cursor: not-allowed; transform: none; }
+
+/* ── CONFIRM MODAL ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,20,35,0.75);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  animation: slideUp 0.25s ease;
+}
+@keyframes slideUp { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+.modal-icon { font-size: 3rem; text-align: center; margin-bottom: 16px; }
+.modal-box h3 { font-family:'DM Serif Display',serif; font-size:1.5rem; color:var(--navy); text-align:center; margin-bottom:12px; }
+.modal-box p { color:var(--ink-mid); font-size:0.92rem; text-align:center; line-height:1.6; margin-bottom:28px; }
+.modal-warning { background:var(--orange-l); border:1px solid #E8C4A8; border-radius:8px; padding:14px; margin-bottom:24px; font-size:0.85rem; color:var(--orange); text-align:center; }
+.modal-btns { display:flex; gap:12px; }
+.modal-btns button { flex:1; padding:14px; border-radius:8px; font-family:'DM Sans',sans-serif; font-weight:700; font-size:0.92rem; cursor:pointer; transition:all 0.15s; border:none; }
+.btn-cancel { background:var(--border); color:var(--ink-mid); }
+.btn-cancel:hover { background:#C8C8C4; }
+.btn-confirm { background:var(--navy); color:var(--white); }
+.btn-confirm:hover { background:var(--navy-deep); }
+
+/* ── GRACIAS SCREEN ── */
+.gracias-screen {
+  display: none;
+  min-height: 100vh;
+  background: var(--navy-deep);
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  flex-direction: column;
+  text-align: center;
+}
+.gracias-screen.show { display: flex; }
+.gracias-icon { font-size: 4rem; margin-bottom: 24px; }
+.gracias-screen h2 { font-family:'DM Serif Display',serif; font-size:2.5rem; color:var(--white); margin-bottom:16px; }
+.gracias-screen p { color:#8BA8C4; font-size:1rem; max-width:500px; line-height:1.7; margin-bottom:32px; }
+.gracias-screen .ref { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:8px; padding:16px 28px; color:var(--white); font-size:0.9rem; }
+.ref strong { color:var(--orange); }
+
+/* ── FLOATING SAVE ── */
+.float-save {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  border-radius: 50px;
+  padding: 12px 22px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 20px rgba(26,58,92,0.3);
+  transition: all 0.15s;
+  z-index: 50;
+}
+.float-save:hover { background:var(--navy-deep); transform:translateY(-2px); }
+.float-save svg { width:16px;height:16px; }
+.save-toast {
+  position: fixed;
+  bottom: 80px;
+  right: 24px;
+  background: var(--success);
+  color: var(--white);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s;
+  z-index: 51;
+}
+.save-toast.show { opacity:1; transform:translateY(0); }
+
+@media(max-width:640px){
+  .header-inner { padding:14px 18px; }
+  .hero { padding:44px 18px 40px; }
+  .instrucciones,.content,.submit-area { padding-left:18px; padding-right:18px; }
+  .candidato-inner { padding:24px 18px; }
+  .candidato-grid { grid-template-columns:1fr; }
+  .sec-letter { width:60px; font-size:2rem; }
+  .q-card { padding:22px 20px; }
+  .likert-label { font-size:0.64rem; }
+  .progress-wrap { padding:10px 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- GRACIAS SCREEN -->
+<div class="gracias-screen" id="graciasScreen">
+  <div class="gracias-icon">✅</div>
+  <h2>¡Test completado!</h2>
+  <p>Gracias por dedicar su tiempo a completar este proceso. Su evaluación ha sido registrada. El equipo de Codreisa se comunicará con usted en los próximos días hábiles.</p>
+  <div class="ref">
+    Referencia de postulación: <strong id="refCode">COD-GV-2026</strong><br>
+    <span style="color:#8BA8C4;font-size:0.82rem;">Guarde este código para seguimiento.</span>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-icon">📋</div>
+    <h3>¿Enviar el test?</h3>
+    <p>Una vez enviado no podrá realizar cambios. Asegúrese de haber respondido todas las preguntas con honestidad.</p>
+    <div class="modal-warning" id="modalWarning"></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="cerrarModal()">Volver a revisar</button>
+      <button class="btn-confirm" onclick="confirmarEnvio()">Sí, enviar ahora</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="mainApp">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-name">Codreisa S.A. de C.V.</span>
+        <span class="brand-sub">Proceso de Selección · Gerente de Ventas</span>
+      </div>
+      <div class="timer-box">
+        <span class="timer-label">Tiempo</span>
+        <span class="timer-value" id="timerDisplay">60:00</span>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-inner">
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <span class="progress-pct" id="progressPct">0 / 37 respondidas</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">Test Psicométrico Confidencial</div>
+      <h1>Evaluación para<br><span>Gerente de Ventas</span></h1>
+      <p class="hero-sub">Este test evalúa su pensamiento estratégico, competencias comerciales, capacidad de liderazgo y fit cultural con Codreisa. Responda con honestidad; no existen respuestas correctas o incorrectas en sentido absoluto.</p>
+      <div class="hero-meta">
+        <div class="meta-item"><span class="meta-val">37</span><span class="meta-key">Preguntas</span></div>
+        <div class="meta-item"><span class="meta-val">60</span><span class="meta-key">Minutos</span></div>
+        <div class="meta-item"><span class="meta-val">7</span><span class="meta-key">Secciones</span></div>
+        <div class="meta-item"><span class="meta-val">120</span><span class="meta-key">Puntos totales</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATOS DEL CANDIDATO -->
+  <section class="candidato-section">
+    <div class="candidato-inner">
+      <h2>Datos del Candidato</h2>
+      <div class="candidato-grid">
+        <div class="field-group">
+          <label>Nombre completo *</label>
+          <input type="text" id="nombre" placeholder="Sus nombres y apellidos completos">
+        </div>
+        <div class="field-group">
+          <label>DUI / Documento de identidad *</label>
+          <input type="text" id="dui" placeholder="00000000-0">
+        </div>
+        <div class="field-group">
+          <label>Teléfono / WhatsApp *</label>
+          <input type="text" id="telefono" placeholder="0000-0000">
+        </div>
+        <div class="field-group">
+          <label>Correo electrónico *</label>
+          <input type="email" id="email" placeholder="su.correo@ejemplo.com">
+        </div>
+        <div class="field-group">
+          <label>Años de experiencia en ventas</label>
+          <select id="experiencia">
+            <option value="">Seleccione...</option>
+            <option>1 – 2 años</option>
+            <option>3 – 4 años</option>
+            <option>5 – 7 años</option>
+            <option>8 – 10 años</option>
+            <option>Más de 10 años</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Pretensión salarial mensual</label>
+          <input type="text" id="salario" placeholder="$000.00">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTRUCCIONES -->
+  <div class="instrucciones">
+    <div class="instr-card">
+      <h3>Instrucciones importantes</h3>
+      <ul class="instr-list">
+        <li data-n="1">Tiene <strong>60 minutos</strong> para completar el test. El contador inicia automáticamente.</li>
+        <li data-n="2">Responda con <strong>honestidad y desde su experiencia real</strong>. No busque la respuesta "correcta".</li>
+        <li data-n="3">En preguntas de opción múltiple, seleccione <strong>una sola opción</strong>. En preguntas abiertas, sea específico y concreto.</li>
+        <li data-n="4">En las escalas de frecuencia, marque la opción que mejor describe su comportamiento habitual.</li>
+        <li data-n="5">Puede guardar su avance con el botón flotante en la esquina. Sus respuestas se guardan automáticamente.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TEST CONTENT -->
+  <div class="content" id="testContent"></div>
+
+  <!-- SUBMIT -->
+  <div class="submit-area">
+    <div class="submit-card">
+      <h3>Ha llegado al final del test</h3>
+      <p>Antes de enviar, verifique que haya respondido todas las preguntas. Una vez enviado no podrá realizar cambios.</p>
+      <div class="progress-summary">
+        <div class="psumm"><span class="psumm-val" id="answeredCount">0</span><span class="psumm-key">Respondidas</span></div>
+        <div class="psumm"><span class="psumm-val" id="pendingCount">37</span><span class="psumm-key">Pendientes</span></div>
+        <div class="psumm"><span class="psumm-val" id="pctCount">0%</span><span class="psumm-key">Completado</span></div>
+      </div>
+      <button class="btn-submit" id="btnSubmit" onclick="abrirModal()">Enviar test ahora →</button>
+    </div>
+  </div>
+
+</div><!-- /mainApp -->
+
+<!-- FLOAT SAVE -->
+<button class="float-save" onclick="guardarManual()">
+  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+  Guardar avance
+</button>
+<div class="save-toast" id="saveToast">✓ Avance guardado</div>
+
+<script>
+// ══════════════════════════════════════════
+// ESTRUCTURA DEL TEST
+// ══════════════════════════════════════════
+const secciones = [
+  {
+    letra: "A", pts: "20 pts",
+    titulo: "Pensamiento Estratégico y Visión Comercial",
+    desc: "Evalúa su capacidad de analizar el entorno, anticipar movimientos y tomar decisiones comerciales de alto impacto.",
+    preguntas: [
+      {
+        id: "A1", tipo: "multiple", num: 1,
+        texto: "Acaba de asumir el cargo de Gerente de Ventas en una empresa con 3 líneas de producto, un equipo de 4 vendedores y una meta anual de $1,800,000. ¿Cuál es su primera acción estratégica?",
+        opciones: [
+          ["A", "Salir a visitar los clientes más importantes para presentarme."],
+          ["B", "Revisar los datos históricos de ventas, clientes y productos antes de actuar."],
+          ["C", "Reunirme con el equipo para establecer las metas del mes de inmediato."],
+          ["D", "Diseñar un plan de prospección de nuevos clientes desde el primer día."],
+        ]
+      },
+      {
+        id: "A2", tipo: "multiple", num: 2,
+        texto: "Uno de sus productos tiene bajo volumen de ventas pero alto margen de utilidad. Otro tiene altísimo volumen pero margen mínimo. ¿Qué hace?",
+        opciones: [
+          ["A", "Concentro el esfuerzo del equipo en el producto de alto volumen para alcanzar la meta."],
+          ["B", "Analizo si el producto de alto margen puede escalarse y diseño una estrategia para empujarlo."],
+          ["C", "Elimino el producto de bajo volumen del portafolio activo del equipo."],
+          ["D", "Dejo que cada vendedor decida qué producto priorizar según su cartera."],
+        ]
+      },
+      {
+        id: "A3", tipo: "multiple", num: 3,
+        texto: "Un competidor nuevo ingresa al mercado con precios 15% más bajos que los suyos. Sus clientes comienzan a preguntar. ¿Su respuesta estratégica es?",
+        opciones: [
+          ["A", "Bajar los precios para igualar la competencia y no perder clientes."],
+          ["B", "Ignorar al competidor y confiar en la lealtad de los clientes actuales."],
+          ["C", "Fortalecer la propuesta de valor: servicio, calidad, relación y condiciones. Preparar argumentario."],
+          ["D", "Ofrecer descuentos especiales solo a los clientes que mencionen al competidor."],
+        ]
+      },
+      {
+        id: "A4", tipo: "multiple", num: 4,
+        texto: "Su empresa quiere entrar a un mercado nuevo (ferreterías o constructoras). ¿Por dónde empieza?",
+        opciones: [
+          ["A", "Visito 20 prospectos la primera semana para ver qué respuesta tengo."],
+          ["B", "Identifico los 5 actores más relevantes del segmento, investigo sus necesidades y diseño una propuesta específica."],
+          ["C", "Espero a que algún cliente nos refiera a alguien en ese sector."],
+          ["D", "Lanzo una campaña de marketing digital dirigida al nuevo segmento."],
+        ]
+      },
+      {
+        id: "A5", tipo: "multiple", num: 5,
+        texto: "¿Cuál estrategia elegiría para el primer trimestre?",
+        opciones: [
+          ["A", "Enfocarme en retener y crecer las cuentas actuales (menor riesgo, retorno rápido)."],
+          ["B", "Dedicar el 80% del esfuerzo a prospectar clientes nuevos desde cero."],
+          ["C", "Equilibrar: 60% retención/crecimiento de cuentas actuales, 40% prospección nueva."],
+          ["D", "Esperar los resultados del primer mes para decidir la estrategia."],
+        ]
+      },
+      {
+        id: "A6", tipo: "abierta", num: 6, lineas: 5,
+        caso: "Una empresa distribuidora tiene 837 productos de baja rotación en inventario que generan costo de capital. La Gerencia le pide un plan para liquidarlos en 6 meses sin destruir el margen general.",
+        texto: "¿Cómo diseña esa estrategia? Describa sus 3 acciones principales.",
+        placeholder: "Describa su plan estratégico de forma clara y estructurada...",
+        minChars: 100
+      },
+    ]
+  },
+  {
+    letra: "B", pts: "18 pts",
+    titulo: "Orientación a Resultados y Gestión de Metas",
+    desc: "Mide el impulso interno de logro, disciplina en el seguimiento de metas y mentalidad de alto rendimiento.",
+    preguntas: [
+      {
+        id: "B7", tipo: "likert", num: 7,
+        texto: "Cuando sé que el mes está difícil, intensifico mis acciones de ventas sin esperar que me lo pidan.",
+        etiquetas: ["Nunca","Rara vez","A veces","Frecuente","Siempre"]
+      },
+      {
+        id: "B8", tipo: "likert", num: 8,
+        texto: "Analizo semanalmente mis indicadores de ventas para detectar desviaciones y corregirlas a tiempo.",
+        etiquetas: ["Nunca","Rara vez","A veces","Frecuente","Siempre"]
+      },
+      {
+        id: "B9", tipo: "likert", num: 9,
+        texto: "Establezco metas personales más altas que las que me pide la empresa, porque me motiva superar mis propios límites.",
+        etiquetas: ["Nunca","Rara vez","A veces","Frecuente","Siempre"]
+      },
+      {
+        id: "B10", tipo: "likert", num: 10,
+        texto: "Cuando no logro la meta, identifico las causas raíz antes de buscar a quién culpar.",
+        etiquetas: ["Nunca","Rara vez","A veces","Frecuente","Siempre"]
+      },
+      {
+        id: "B11", tipo: "multiple", num: 11,
+        texto: "Lleva dos meses seguidos al 70% de su meta. ¿Cuál es su reacción inmediata?",
+        opciones: [
+          ["A", "Reviso el pipeline, identifico qué oportunidades pueden cerrarse rápido y ejecuto un sprint de ventas."],
+          ["B", "Hablo con la Gerencia para renegociar la meta, ya que el mercado está difícil."],
+          ["C", "Refuerzo la motivación del equipo con una reunión y espero que mejore el mes siguiente."],
+          ["D", "Aumento las visitas a clientes existentes para generar pedidos de reposición."],
+        ]
+      },
+      {
+        id: "B12", tipo: "abierta", num: 12, lineas: 4,
+        texto: "¿Cuál ha sido la meta más difícil que ha logrado en su carrera? ¿Qué hizo diferente para conseguirla?",
+        placeholder: "Sea específico: mencione la meta con cifras, las acciones concretas que tomó y el resultado final...",
+        minChars: 80
+      },
+    ]
+  },
+  {
+    letra: "C", pts: "18 pts",
+    titulo: "Liderazgo y Desarrollo de Equipos",
+    desc: "Mide la capacidad de dirigir, motivar, desarrollar y gestionar el desempeño de un equipo comercial.",
+    preguntas: [
+      {
+        id: "C13", tipo: "caso-abierta", num: 13,
+        caso: "Uno de sus vendedores tiene 3 meses seguidos con bajo rendimiento. Es una persona comprometida pero sus habilidades de cierre son débiles. La Gerencia le pregunta qué hará.",
+        texto: "¿Cómo maneja esta situación? Describa el proceso paso a paso.",
+        placeholder: "Explique su proceso: diagnóstico, conversación con el vendedor, plan de mejora, seguimiento y criterio de decisión final...",
+        minChars: 100, lineas: 4
+      },
+      {
+        id: "C14", tipo: "multiple", num: 14,
+        texto: "Su equipo está desmotivado porque la meta del trimestre parece imposible. ¿Cómo reacciona?",
+        opciones: [
+          ["A", "Les digo que si no mejoran en el próximo mes tendré que hacer cambios en el equipo."],
+          ["B", "Divido la meta trimestral en micrometas semanales y celebro cada avance pequeño."],
+          ["C", "Los reúno, escucho sus preocupaciones y juntos rediseñamos la estrategia para lo que queda del trimestre."],
+          ["D", "Les ofrezco un bono extra si logran la meta aunque sea en el 80%."],
+        ]
+      },
+      {
+        id: "C15", tipo: "multiple", num: 15,
+        texto: "¿Qué porcentaje aproximado de su tiempo como gerente dedicaría a actividades de coaching y desarrollo de su equipo?",
+        opciones: [
+          ["A", "Menos del 10%. Mi rol es vender, no enseñar."],
+          ["B", "Entre el 20% y el 30%. El equipo mejora si lo acompaño regularmente."],
+          ["C", "Más del 50%. Mi principal trabajo es desarrollar a otros."],
+          ["D", "Depende del momento: más coaching al inicio, menos cuando el equipo ya funciona bien."],
+        ]
+      },
+      {
+        id: "C16", tipo: "likert", num: 16,
+        texto: "Reconozco y celebro los logros de mi equipo de forma frecuente y específica.",
+        etiquetas: ["Nunca","Rara vez","A veces","Frecuente","Siempre"]
+      },
+      {
+        id: "C17", tipo: "abierta", num: 17, lineas: 4,
+        texto: "Describa su estilo de liderazgo. ¿Cómo le describiría un vendedor que trabajó directamente bajo su dirección?",
+        placeholder: "Sea honesto y concreto. Puede incluir fortalezas y también aspectos que ha tenido que trabajar...",
+        minChars: 80
+      },
+    ]
+  },
+  {
+    letra: "D", pts: "20 pts",
+    titulo: "Prospección, Negociación y Cierre de Ventas",
+    desc: "Mide las habilidades técnicas de venta consultiva, apertura de mercado y cierre de negocios de alto valor.",
+    preguntas: [
+      {
+        id: "D18", tipo: "multiple", num: 18,
+        texto: "En la primera visita a un prospecto nuevo, ¿cuál es su objetivo principal?",
+        opciones: [
+          ["A", "Presentar todo el portafolio de productos para que el cliente conozca lo que ofrezco."],
+          ["B", "Escuchar activamente para entender las necesidades, dolores y prioridades del prospecto."],
+          ["C", "Conseguir un pedido aunque sea pequeño para abrir la cuenta."],
+          ["D", "Entregar catálogo y lista de precios para que el cliente evalúe con calma."],
+        ]
+      },
+      {
+        id: "D19", tipo: "multiple", num: 19,
+        texto: 'Un cliente le dice: "Su precio está un 12% arriba de la competencia. No le puedo comprar así." ¿Qué responde?',
+        opciones: [
+          ["A", '"Déjeme hablar con mi jefe y veo si le puedo dar algún descuento."'],
+          ["B", '"Entiendo. Permítame mostrarle por qué ese 12% le genera un ahorro mayor en el largo plazo."'],
+          ["C", '"Si me hace el pedido hoy, le doy un 10% de descuento especial."'],
+          ["D", '"Ese precio incluye servicio, garantía y respaldo técnico que la competencia no ofrece."'],
+        ]
+      },
+      {
+        id: "D20", tipo: "caso-abierta", num: 20,
+        caso: "Tiene una cuenta que lleva 2 años sin crecer. El cliente compra siempre lo mismo y en el mismo volumen. Su empresa necesita un 30% más de ventas en esa cuenta este año.",
+        texto: "¿Qué estrategia diseña para crecer esa cuenta? Sea específico.",
+        placeholder: "Describa su plan de acción con pasos concretos para crecer esta cuenta un 30%...",
+        minChars: 100, lineas: 4
+      },
+      {
+        id: "D21", tipo: "multiple", num: 21,
+        texto: "¿Cuál de estas es la señal más clara de que un prospecto está listo para cerrar?",
+        opciones: [
+          ["A", "Dice que le gustó la presentación."],
+          ["B", "Pregunta sobre plazos de entrega, formas de pago o condiciones de crédito."],
+          ["C", "Pide que vuelva en dos semanas con más información."],
+          ["D", "Compara su propuesta con la de otro proveedor."],
+        ]
+      },
+      {
+        id: "D22", tipo: "multiple", num: 22,
+        texto: "¿Qué técnica usa cuando un cierre se ha dilatado demasiado y el prospecto no decide?",
+        opciones: [
+          ["A", "Lo llamo cada semana hasta que decida."],
+          ["B", "Le pregunto directamente qué le impide tomar la decisión hoy."],
+          ["C", "Le ofrezco una condición especial válida solo por esta semana para generar urgencia."],
+          ["D", "Dejo de presionarlo y espero a que me contacte cuando esté listo."],
+        ]
+      },
+      {
+        id: "D23", tipo: "abierta", num: 23, lineas: 5,
+        texto: "Cuente el proceso completo de la venta más compleja que haya cerrado: desde cómo identificó la oportunidad hasta cómo logró el sí. ¿Qué aprendió?",
+        placeholder: "Incluya: cómo identificó la oportunidad, las objeciones que enfrentó, cómo las manejó, el tiempo del ciclo, el valor aproximado del negocio y la lección principal...",
+        minChars: 120
+      },
+    ]
+  },
+  {
+    letra: "E", pts: "20 pts",
+    titulo: "Pensamiento Crítico y Resolución de Problemas",
+    desc: "Mide la capacidad analítica, lógica situacional y toma de decisiones bajo presión e incertidumbre.",
+    preguntas: [
+      {
+        id: "E24", tipo: "multiple", num: 24,
+        caso: "Revisa el ERP y nota que el 20% de los clientes generan el 80% de las ventas. Los otros 80% de clientes casi no compran. El equipo visita a todos por igual.",
+        texto: "¿Qué problema identifica y qué decisión toma?",
+        opciones: [
+          ["A", "El problema es que hay muy pocos clientes grandes. La solución es prospectar más cuentas grandes."],
+          ["B", "El problema es asignación ineficiente de tiempo. Rediseño la segmentación de cartera para enfocar al equipo en los clientes de mayor valor y potencial."],
+          ["C", "No es necesariamente un problema; la distribución de Pareto es normal en ventas."],
+          ["D", "El problema son los vendedores. Deben visitar menos clientes pequeños y centrarse en los grandes."],
+        ]
+      },
+      {
+        id: "E25", tipo: "caso-abierta", num: 25,
+        caso: "Un vendedor estrella (el que más vende) comienza a llegar tarde, falta a reuniones y sus ventas bajan un 30% en dos meses. Los demás del equipo empiezan a notarlo.",
+        texto: "¿Cómo analiza la situación y qué hace?",
+        placeholder: "Describa su proceso: cómo investiga la causa, qué conversación tiene, cómo lo comunica al equipo...",
+        minChars: 100, lineas: 4
+      },
+      {
+        id: "E26", tipo: "caso-abierta", num: 26,
+        caso: "La Gerencia le pide un informe de por qué las ventas bajaron un 18% en el último trimestre. Tiene acceso al ERP pero el informe debe estar listo en 24 horas.",
+        texto: "¿Qué datos analiza primero y cómo estructura el informe para la Gerencia?",
+        placeholder: "Explique qué información revisaría primero, cómo la organizaría y qué estructura tendría el informe...",
+        minChars: 80, lineas: 4
+      },
+      {
+        id: "E27", tipo: "multiple", num: 27,
+        texto: "Tiene que decidir entre dos estrategias y no tiene suficiente información para estar seguro. ¿Qué hace?",
+        opciones: [
+          ["A", "Espero hasta tener más datos antes de decidir."],
+          ["B", "Elijo la opción que me parece más lógica y me comprometo a monitorearla y corregir rápido si falla."],
+          ["C", "Consulto con mi superior para que tome la decisión."],
+          ["D", "Aplico las dos estrategias a la mitad del equipo cada una y veo cuál funciona mejor."],
+        ]
+      },
+      {
+        id: "E28", tipo: "abierta", num: 28, lineas: 4,
+        texto: "Si tuviera que identificar el mayor riesgo comercial para una empresa distribuidora como Codreisa en los próximos 12 meses, ¿cuál sería y qué haría para mitigarlo?",
+        placeholder: "Sea específico: nombre el riesgo, explique por qué lo considera prioritario y proponga al menos 2 acciones concretas de mitigación...",
+        minChars: 80
+      },
+    ]
+  },
+  {
+    letra: "F", pts: "12 pts",
+    titulo: "Inteligencia Emocional y Resiliencia",
+    desc: "Mide la autorregulación, empatía, manejo del estrés y capacidad de mantenerse efectivo bajo presión.",
+    preguntas: [
+      {
+        id: "F29", tipo: "likert", num: 29,
+        texto: "Cuando un cliente me rechaza o me trata mal, lo proceso rápido y sigo adelante sin que afecte mi desempeño del resto del día.",
+        etiquetas: ["Nunca","Rara vez","A veces","Frecuente","Siempre"]
+      },
+      {
+        id: "F30", tipo: "likert", num: 30,
+        texto: "En situaciones de alta presión, mantengo la calma y tomo decisiones racionales sin actuar por impulso.",
+        etiquetas: ["Nunca","Rara vez","A veces","Frecuente","Siempre"]
+      },
+      {
+        id: "F31", tipo: "likert", num: 31,
+        texto: "Cuando cometo un error, lo reconozco abiertamente, aprendo de él y sigo adelante sin castigarme en exceso.",
+        etiquetas: ["Nunca","Rara vez","A veces","Frecuente","Siempre"]
+      },
+      {
+        id: "F32", tipo: "caso-abierta", num: 32,
+        caso: 'Un cliente clave lo llama furioso porque hubo un error en su pedido y amenaza con cambiarse a la competencia. Usted no tuvo ninguna responsabilidad en el error.',
+        texto: "¿Cómo maneja esa llamada? Describa exactamente qué dice y qué hace después.",
+        placeholder: "Describa su respuesta paso a paso: qué dice primero, cómo valida la emoción del cliente, qué solución propone y qué acciones toma posteriormente...",
+        minChars: 80, lineas: 4
+      },
+      {
+        id: "F33", tipo: "multiple", num: 33,
+        texto: "Recibe críticas fuertes de la Gerencia sobre su desempeño en una reunión, frente a otras personas. ¿Cómo reacciona?",
+        opciones: [
+          ["A", "Me siento herido pero no lo muestro. Después busco al GM para aclarar la situación en privado."],
+          ["B", "Respondo de inmediato en la reunión para defenderme y aclarar mi posición."],
+          ["C", "Lo tomo como retroalimentación, analizo qué hay de verdad en la crítica y la uso para mejorar."],
+          ["D", "Me genera duda sobre si estoy en el cargo correcto."],
+        ]
+      },
+    ]
+  },
+  {
+    letra: "G", pts: "12 pts",
+    titulo: "Autoconocimiento y Fit Cultural con Codreisa",
+    desc: "Mide la conciencia de las propias fortalezas y limitaciones, y la alineación de valores con la empresa.",
+    preguntas: [
+      {
+        id: "G34", tipo: "abierta", num: 34, lineas: 5,
+        texto: "¿Cuáles son sus 3 fortalezas más poderosas como vendedor y líder? ¿Y cuáles son sus 2 principales áreas de mejora? Sea honesto.",
+        placeholder: "Fortalezas: (1)... (2)... (3)...\nÁreas de mejora: (1)... (2)...",
+        minChars: 80
+      },
+      {
+        id: "G35", tipo: "abierta", num: 35, lineas: 5,
+        texto: "Codreisa es una empresa salvadoreña en proceso de transformación comercial. ¿Por qué cree que usted es la persona indicada para liderar esa transformación? Sea directo y específico.",
+        placeholder: "Conecte sus fortalezas con las necesidades reales del cargo. Muestre que conoce la empresa...",
+        minChars: 80
+      },
+      {
+        id: "G36", tipo: "multiple", num: 36,
+        texto: "¿Cuál de estas frases describe mejor su relación con los resultados y el dinero en el trabajo?",
+        opciones: [
+          ["A", "Trabajo para vivir cómodamente. No necesito ser el número uno."],
+          ["B", "Me motiva ganar bien, pero también me importa el ambiente y el equipo."],
+          ["C", "Quiero ser el mejor en lo que hago y que mis resultados lo demuestren. El dinero es la consecuencia."],
+          ["D", "El salario fijo es lo más importante. Las comisiones son un plus, no una necesidad."],
+        ]
+      },
+      {
+        id: "G37", tipo: "abierta", num: 37, lineas: 5,
+        texto: "Si lo contratamos hoy, ¿qué es lo primero que haría en su primera semana en Codreisa y por qué?",
+        placeholder: "Sea específico y realista. Explique su razonamiento detrás de cada acción que tomaría...",
+        minChars: 80
+      },
+    ]
+  }
+];
+
+// ══════════════════════════════════════════
+// ESTADO
+// ══════════════════════════════════════════
+const respuestas = {};
+let totalPreguntas = 0;
+let timerInterval = null;
+let secondsLeft = 60 * 60;
+
+secciones.forEach(s => s.preguntas.forEach(p => totalPreguntas++));
+
+// ══════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════
+function renderTest() {
+  const container = document.getElementById('testContent');
+  let html = '';
+
+  secciones.forEach(sec => {
+    html += `<div class="sec-header">
+      <div class="sec-letter">${sec.letra}</div>
+      <div class="sec-info">
+        <div class="sec-title">${sec.titulo}</div>
+        <div class="sec-desc">${sec.desc}</div>
+        <span class="sec-pts">${sec.pts}</span>
+      </div>
+    </div>`;
+
+    sec.preguntas.forEach(q => {
+      html += renderPregunta(q);
+    });
+  });
+
+  container.innerHTML = html;
+  attachEvents();
+}
+
+function renderPregunta(q) {
+  let caseHtml = '';
+  if (q.caso) {
+    caseHtml = `<div class="q-case-box"><div class="case-tag">Situación</div>${q.caso}</div>`;
+  }
+
+  let bodyHtml = '';
+  if (q.tipo === 'multiple') {
+    const optsHtml = q.opciones.map(([letra, texto]) =>
+      `<label class="option" data-qid="${q.id}" data-val="${letra}">
+        <input type="radio" name="${q.id}" value="${letra}">
+        <span class="option-letter">${letra}</span>
+        <span class="option-text">${texto}</span>
+      </label>`
+    ).join('');
+    bodyHtml = `<div class="options">${optsHtml}</div>`;
+  } else if (q.tipo === 'likert') {
+    const etqs = q.etiquetas || ["Nunca","Rara vez","A veces","Frecuente","Siempre"];
+    const labels = etqs.map((e,i) => `<div class="likert-label">${e}</div>`).join('');
+    const btns = etqs.map((e,i) => `
+      <div class="likert-btn" data-qid="${q.id}" data-val="${i+1}">
+        <div class="dot"></div>
+        <span class="likert-num">${i+1}</span>
+      </div>`).join('');
+    bodyHtml = `<div class="likert-wrap">
+      <div class="likert-labels">${labels}</div>
+      <div class="likert-options">${btns}</div>
+    </div>`;
+  } else if (q.tipo === 'abierta' || q.tipo === 'caso-abierta') {
+    bodyHtml = `<textarea class="q-textarea" id="ta_${q.id}" placeholder="${q.placeholder || ''}" rows="${q.lineas || 4}" oninput="onTextarea('${q.id}', this)"></textarea>
+    <div class="char-count" id="cc_${q.id}">0 caracteres</div>`;
+  }
+
+  return `<div class="q-card" id="card_${q.id}">
+    <div class="answered-badge">
+      <svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+    </div>
+    <div class="q-num">Pregunta ${q.num} de ${totalPreguntas}</div>
+    ${caseHtml}
+    <div class="q-text">${q.texto}</div>
+    ${bodyHtml}
+  </div>`;
+}
+
+function attachEvents() {
+  // Opciones múltiples
+  document.querySelectorAll('.option').forEach(el => {
+    el.addEventListener('click', () => {
+      const qid = el.dataset.qid;
+      const val = el.dataset.val;
+      document.querySelectorAll(`.option[data-qid="${qid}"]`).forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      respuestas[qid] = val;
+      markAnswered(qid);
+      actualizarProgreso();
+    });
+  });
+
+  // Likert
+  document.querySelectorAll('.likert-btn').forEach(el => {
+    el.addEventListener('click', () => {
+      const qid = el.dataset.qid;
+      document.querySelectorAll(`.likert-btn[data-qid="${qid}"]`).forEach(b => b.classList.remove('sel'));
+      el.classList.add('sel');
+      respuestas[qid] = el.dataset.val;
+      markAnswered(qid);
+      actualizarProgreso();
+    });
+  });
+}
+
+function onTextarea(qid, el) {
+  const val = el.value.trim();
+  const cc = document.getElementById('cc_' + qid);
+  if (cc) {
+    cc.textContent = `${val.length} caracteres`;
+    cc.classList.toggle('warn', val.length > 0 && val.length < 50);
+  }
+  if (val.length >= 30) {
+    respuestas[qid] = val;
+    markAnswered(qid);
+  } else {
+    delete respuestas[qid];
+    unmarkAnswered(qid);
+  }
+  actualizarProgreso();
+}
+
+function markAnswered(qid) {
+  const card = document.getElementById('card_' + qid);
+  if (card) card.classList.add('answered');
+}
+function unmarkAnswered(qid) {
+  const card = document.getElementById('card_' + qid);
+  if (card) card.classList.remove('answered');
+}
+
+function actualizarProgreso() {
+  const answered = Object.keys(respuestas).length;
+  const pct = Math.round((answered / totalPreguntas) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = `${answered} / ${totalPreguntas} respondidas`;
+  document.getElementById('answeredCount').textContent = answered;
+  document.getElementById('pendingCount').textContent = totalPreguntas - answered;
+  document.getElementById('pctCount').textContent = pct + '%';
+}
+
+// ══════════════════════════════════════════
+// TIMER
+// ══════════════════════════════════════════
+function startTimer() {
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    const m = Math.floor(secondsLeft / 60);
+    const s = secondsLeft % 60;
+    const display = document.getElementById('timerDisplay');
+    display.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    display.classList.remove('warn','danger');
+    if (secondsLeft <= 300 && secondsLeft > 60) display.classList.add('warn');
+    if (secondsLeft <= 60) display.classList.add('danger');
+    if (secondsLeft <= 0) {
+      clearInterval(timerInterval);
+      confirmarEnvio();
+    }
+  }, 1000);
+}
+
+// ══════════════════════════════════════════
+// MODAL Y ENVÍO
+// ══════════════════════════════════════════
+function abrirModal() {
+  const nombre = document.getElementById('nombre').value.trim();
+  if (!nombre) { alert('Por favor ingrese su nombre completo antes de enviar.'); return; }
+
+  const answered = Object.keys(respuestas).length;
+  const pending = totalPreguntas - answered;
+  const warn = document.getElementById('modalWarning');
+  if (pending > 0) {
+    warn.textContent = `⚠ Tiene ${pending} pregunta(s) sin responder. Puede volver a revisarlas.`;
+    warn.style.display = 'block';
+  } else {
+    warn.style.display = 'none';
+  }
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function cerrarModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+// URL del Web App — reemplazar después de publicar en Apps Script
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbxKOAZOA82KHbroohkJKAy-1SdBA0DRJ7N290zSy6vvNTSgH7mhnW88j6mjftqCQFCcfQ/exec";
+
+async function confirmarEnvio() {
+  clearInterval(timerInterval);
+  cerrarModal();
+
+  document.getElementById('mainApp').style.display = 'none';
+  document.querySelector('.float-save').style.display = 'none';
+
+  const gracias = document.getElementById('graciasScreen');
+  gracias.classList.add('show');
+  gracias.querySelector('h2').textContent = 'Enviando respuestas…';
+  gracias.querySelector('p').textContent = 'Por favor espere, no cierre esta ventana.';
+  document.querySelector('.gracias-icon').textContent = '⏳';
+
+  const tiempoUsado = (60 * 60) - secondsLeft;
+  const payload = {
+    nombre:      document.getElementById('nombre').value,
+    dui:         document.getElementById('dui').value,
+    telefono:    document.getElementById('telefono').value,
+    email:       document.getElementById('email').value,
+    experiencia: document.getElementById('experiencia').value,
+    salario:     document.getElementById('salario').value,
+    tiempoUsado,
+    respuestas
+  };
+
+  try {
+    // Google Apps Script requiere mode:'no-cors' desde páginas externas
+    // Usamos un iframe trick para enviar el formulario sin bloqueo CORS
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(payload));
+
+    const res = await fetch(SHEETS_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      mode: 'no-cors'
+    });
+    // Con no-cors la respuesta es opaca — asumimos éxito si no hay error de red
+    const json = { ok: true };
+    if (json.ok) {
+      const ref = json.ref || ('COD-GV-' + Date.now().toString(36).toUpperCase());
+      document.getElementById('refCode').textContent = ref;
+      gracias.querySelector('h2').textContent = '¡Test enviado con éxito!';
+      gracias.querySelector('p').textContent = 'Sus respuestas han sido recibidas. El equipo de Codreisa se comunicará con usted en los próximos días hábiles.';
+      document.querySelector('.gracias-icon').textContent = '✅';
+    } else { mostrarErrorEnvio(gracias, payload); }
+  } catch(err) { mostrarErrorEnvio(gracias, payload); }
+
+  localStorage.removeItem('codreisa_test');
+}
+
+function mostrarErrorEnvio(gracias, payload) {
+  gracias.querySelector('h2').textContent = 'Error de conexión';
+  document.querySelector('.gracias-icon').textContent = '⚠️';
+  const ref = 'COD-GV-' + Date.now().toString(36).toUpperCase();
+  document.getElementById('refCode').textContent = ref;
+  gracias.querySelector('p').innerHTML = 'Hubo un problema al enviar. Copie sus respuestas y envíelas a <strong>ventas@codreisa.com.sv</strong>';
+  const div = document.createElement('div');
+  div.style.cssText = 'background:#0F2338;border-radius:8px;padding:14px;margin-top:14px;text-align:left;max-height:180px;overflow-y:auto;color:#8BA8C4;font-size:0.75rem;font-family:monospace;line-height:1.5;';
+  div.textContent = 'REF: ' + ref + '\n' + JSON.stringify(payload, null, 2);
+  const btn = document.createElement('button');
+  btn.textContent = 'Copiar respuestas';
+  btn.style.cssText = 'margin-top:10px;background:#C55A11;color:white;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:700;';
+  btn.onclick = () => { navigator.clipboard.writeText(div.textContent).then(() => { btn.textContent = '✓ Copiado'; }); };
+  gracias.appendChild(div);
+  gracias.appendChild(btn);
+}
+
+// ══════════════════════════════════════════
+// GUARDAR AVANCE
+// ══════════════════════════════════════════
+function guardarManual() {
+  const data = {
+    nombre: document.getElementById('nombre').value,
+    dui: document.getElementById('dui').value,
+    telefono: document.getElementById('telefono').value,
+    email: document.getElementById('email').value,
+    experiencia: document.getElementById('experiencia').value,
+    salario: document.getElementById('salario').value,
+    respuestas,
+    segundosRestantes: secondsLeft,
+    ts: Date.now()
+  };
+  localStorage.setItem('codreisa_test', JSON.stringify(data));
+
+  const toast = document.getElementById('saveToast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+function cargarAvance() {
+  try {
+    const raw = localStorage.getItem('codreisa_test');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (Date.now() - data.ts > 1000 * 60 * 90) { localStorage.removeItem('codreisa_test'); return; }
+
+    if (data.nombre) document.getElementById('nombre').value = data.nombre;
+    if (data.dui) document.getElementById('dui').value = data.dui;
+    if (data.telefono) document.getElementById('telefono').value = data.telefono;
+    if (data.email) document.getElementById('email').value = data.email;
+    if (data.experiencia) document.getElementById('experiencia').value = data.experiencia;
+    if (data.salario) document.getElementById('salario').value = data.salario;
+    if (data.segundosRestantes) secondsLeft = data.segundosRestantes;
+
+    if (data.respuestas) {
+      Object.entries(data.respuestas).forEach(([qid, val]) => {
+        respuestas[qid] = val;
+        // Restaurar UI
+        const opcion = document.querySelector(`.option[data-qid="${qid}"][data-val="${val}"]`);
+        if (opcion) {
+          opcion.classList.add('selected');
+          markAnswered(qid);
+        }
+        const likertBtn = document.querySelector(`.likert-btn[data-qid="${qid}"][data-val="${val}"]`);
+        if (likertBtn) {
+          likertBtn.classList.add('sel');
+          markAnswered(qid);
+        }
+        const ta = document.getElementById('ta_' + qid);
+        if (ta) {
+          ta.value = val;
+          const cc = document.getElementById('cc_' + qid);
+          if (cc) cc.textContent = val.length + ' caracteres';
+          markAnswered(qid);
+        }
+      });
+      actualizarProgreso();
+    }
+  } catch(e) {}
+}
+
+// Auto-guardado cada 60s
+setInterval(guardarManual, 60000);
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+renderTest();
+cargarAvance();
+startTimer();
+</script>
+</body>
+</html>
